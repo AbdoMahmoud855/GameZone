@@ -1,0 +1,72 @@
+﻿@using GameZone.Helper
+
+@model CreateGameFormViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<h2>
+    <i class="bi bi-plus-circle-dotted btn-lg"></i>
+    Add A New Game
+</h2>
+
+<form asp-action="Create" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class=" form-group">
+                <label asp-for="Cover" class="form-label mt-4">Image </label>
+                <input asp-for="Cover" class="form-control" 
+                data-rule-extension="@FileSetting.AllowedExtentions.Replace(".",string.Empty)"
+                data-msg-extension="Not Allowed Extention"
+                data-rule-filesize="@FileSetting.MaxFileSizeInBytes"
+                       data-msg-filesize="Maximum Allowed is (@FileSetting.MaxFileSizeInMB) MP ">
+                <small asp-for="Cover" class="form-text text-muted">Only @FileSetting.AllowedExtentions files are allwoed with max size @FileSetting.MaxFileSizeInMB</small>
+                <span asp-validation-for="Cover" class="text-bg-danger"></span>
+            </div>
+        <div class=" form-group">
+            <label asp-for="Name" class="form-label mt-4">Name </label>
+            <input asp-for="Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name">
+           <span asp-validation-for="Name" class="text-bg-danger" ></span>
+        </div>
+            <div class=" form-group">
+                <label asp-for="CategoryId"  class="form-label mt-4">select Category</label>
+                <select class="form-select" asp-for="CategoryId" asp-items="Model.categories"
+                        data-placeholder="Select a Category"
+                        data-minimum-results-for-search="Infinity">
+                    <option></option>
+                   
+                </select>
+                <span asp-validation-for="categories" class="text-bg-danger  select2-selection__rendered" id="select2-CategoryId-container"></span>
+            </div>
+            <div class=" form-group">
+                <label asp-for="SelectedDevices" class="form-label mt-4">select Devices</label>
+                <select 
+                    class="form-select" asp-for="SelectedDevices" asp-items="Model.Devices"
+                        data-placeholder="Selected a Devices ">
+                    <option value=""></option>
+
+                </select>
+                <span asp-validation-for="SelectedDevices" class="text-bg-danger "></span>
+            </div>
+            <div class=" form-group">
+                <label asp-for="Description" class="form-label mt-4">Description </label>
+                <input asp-for="Description" class="form-control" placeholder="Enter Descrption">
+                <span asp-validation-for="Description" class="text-bg-danger"></span>
+            </div>
+            <dl></dl>
+            <button type="submit" class="btn btn-secondary m-md-2"> Create </button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center pt-5 overflow-hidden">
+            <img class="Cover-preview d-none " alt="Cover" />
+
+        </div>
+        </div>
+   
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/FileSizeValidator.js" asp-append-version="true"></script>
+<script src="~/js/game-form.js" asp-append-version="true"></script>
+}
